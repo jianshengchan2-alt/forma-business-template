@@ -1,0 +1,941 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMA - Business Solutions</title>
+
+<style>
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    html {
+        scroll-behavior: smooth;
+    }
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 60px;
+        background-color: white;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    }
+    .logo {
+        font-size: 26px;
+        font-weight: bold;
+        letter-spacing: 3px;
+        color: #222;
+    }
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 35px;
+        margin: 0;
+        padding: 0;
+    }
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 15px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+    .nav-links a:hover {
+        color: #b49a78;
+    }
+    .nav-links a.active {
+    color: #b49a78;
+    }
+    .about {
+        padding: 100px 20px;
+        background-color: #f8f7f4;
+        text-align: center;
+    }
+    .about-content h2 {
+        font-size: 36px;
+        color: #222;
+        margin-bottom: 20px;
+    }
+    .about-content p {
+        font-size: 17px;
+        color: #666;
+        line-height: 1.8;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+    .services {
+        padding: 100px 20px;
+        background-color: white;
+        text-align: center;
+    }
+    .services-content h2 {
+        font-size: 36px;
+        color: #222;
+        margin-bottom: 15px;
+    }
+    .services-content p {
+        font-size: 17px;
+        color: #666;
+        line-height: 1.8;
+    }
+    .service-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 50px;
+    }
+    .service-card {
+        background-color: #f8f7f4;
+        padding: 40px 30px;
+        width: 280px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: 0.3s;
+        min-height: 220px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .service-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .service-card h3 {
+        font-size: 22px;
+        color: #222;
+        margin-bottom: 15px;
+    }
+    .service-card p {
+        font-size: 15px;
+        color: #666;
+        line-height: 1.7;
+        margin: 0;
+    }
+    .gallery {
+        padding: 100px 20px;
+        background-color: #f8f7f4;
+        text-align: center;
+    }
+    .gallery-content h2 {
+        font-size: 36px;
+        color: #222;
+        margin-bottom: 15px;
+    }
+    .gallery-content p {
+        font-size: 17px;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 50px;
+    }
+    .gallery-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    .gallery-item img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 12px;
+        display: block;
+        transition: 0.3s;
+    }
+    .gallery-item:hover img {
+        transform: scale(1.05);
+    }
+    .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.95);
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .lightbox img {
+        width: auto;
+        height: auto;
+        max-width: 75%;
+        max-height: 75vh;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    .lightbox button {
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    .lightbox-next {
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #222;
+        font-size: 40px;
+        cursor: pointer;
+        padding: 15px;
+        transition: 0.3s;
+    }
+    .lightbox-prev {
+        position: absolute;
+        left: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #222;
+        font-size: 40px;
+        cursor: pointer;
+        padding: 15px;
+        transition: 0.3s;
+    }
+
+    .lightbox-next:hover {
+        color: #b49a78;
+        transform: translateY(-50%) scale(1.2);
+    }
+
+    .testimonials {
+        padding: 100px 20px;
+        background-color: white;
+        text-align: center;
+    }
+    .testimonials-content h2 {
+        font-size: 36px;
+        color: #222;
+        margin-bottom: 15px;
+    }
+    .testimonials-content p {
+        font-size: 17px;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 50px;
+    }
+    .testimonial-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    .testimonial-card {
+        background-color: #faf9f6;
+        padding: 40px 30px;
+        width: 280px;
+        border-radius: 18px;
+        border: 1px solid #eeeae3;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        transition: 0.3s;
+    }
+    .testimonial-card::before {
+        content: "“";
+        display: block;
+        font-size: 55px;
+        color: #b49a78;
+        font-family: Georgia, serif;
+        line-height: 1;
+        margin-bottom: 15px;
+    }
+    .testimonial-card p {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 30px;
+    }
+    .testimonial-card h3 {
+        font-size: 17px;
+        color: #222;
+        margin-bottom: 5px;
+    }
+    .testimonial-card span {
+        font-size: 13px;
+        color: #999;
+        letter-spacing: 0.5px;
+    }
+    .testimonial-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    }
+    .faq {
+        padding: 100px 20px;
+        background-color: #f8f7f4;
+        text-align: center;
+    }
+
+    .faq-content h2 {
+        font-size: 36px;
+        color: #222;
+        margin-bottom: 15px;
+    }
+
+    .faq-content p {
+        font-size: 17px;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 50px;
+    }
+    .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        background-color: white;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #eeeae3;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        overflow: hidden;
+    }
+
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px 30px;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .faq-question h3 {
+        font-size: 17px;
+        color: #222;
+        margin: 0;
+    }
+
+    .faq-question span {
+        font-size: 25px;
+        color: #b49a78;
+    }
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 30px;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+
+    .faq-answer p {
+        font-size: 15px;
+        color: #666;
+        line-height: 1.8;
+        text-align: left;
+        margin: 0;
+    }
+    .hero {
+        height: 100vh;
+        background-image:linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("https://images.unsplash.com/photo-1497366811353-6870744d04b2");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .hero-content {
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        padding: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 55px;
+        margin-bottom: 20px;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .hero-content button {
+        background-color: white;
+        color: #222;
+        border: none;
+        padding: 15px 35px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .hero-content button:hover {
+        background-color: #e8e1d6;
+        color: #252525;
+    }
+    .contact {
+        padding: 100px 20px;
+        background-color: #ffffff;
+        text-align: center;
+    }
+    .contact-content h2 {
+        font-size: 36px;
+        color: #222;
+        margin-bottom: 15px;
+    }
+    .contact-content p {
+        font-size: 17px;
+        color: #666;
+        line-height: 1.8;
+    }
+    .contact-container {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 50px;
+    }
+
+   .contact-card {
+        width: 280px;
+        height: 300px;
+        padding: 30px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+        align-items: center;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-sizing: border-box;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .email-card {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("https://www.verveit.com/hubfs/Imported_Blog_Media/emails-list-on-a-laptop-screen-office-background-2022-12-16-12-14-53-utc-2.jpg");
+    }
+
+    .call-card {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("https://www.myaifrontdesk.com/_next/image?q=75&url=https%3A%2F%2Fd3s74w4iokvvix.cloudfront.net%2Fblogs%2Ffinding-the-best-answering-service-for-real-estate-agents-a-2026-guide%2Fdcb41778c4a98685366debd1e8adee4bc241cd95.jpeg&w=3840");
+    }
+
+    .visit-card {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url("https://prtimes.jp/i/24137/117/resize/d24137-117-478265-5.jpg");
+    }
+    .contact-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    .contact-card h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .contact-card p {
+        font-size: 14px;
+        line-height: 1.6;
+        margin: 0;
+    }
+    .footer {
+        background-color: #222;
+        color: white;
+        padding: 80px 20px 40px;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-content h2 {
+        font-size: 26px;
+        letter-spacing: 3px;
+        margin-bottom: 12px;
+    }
+
+    .footer-content p {
+        font-size: 14px;
+        color: #aaa;
+        margin-bottom: 35px;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid #444;
+        padding-top: 20px;
+    }
+
+    .footer-bottom p {
+        font-size: 13px;
+        color: #888;
+        margin: 0;
+    }
+    #backToTop {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: 50%;
+        background-color: #fdfdfc;
+        color: rgb(0, 0, 0);
+        font-size: 22px;
+        cursor: pointer;
+        display: none;
+        z-index: 999;
+        transition: 0.3s;
+    }
+    .menu-toggle {
+        display: none;
+    }
+    .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    @media (max-width: 768px) {
+    .service-container {
+        flex-direction: column;
+        align-items: center;
+    }.hero-content h1 {
+        font-size: 36px;
+    }
+    .navbar {
+        padding: 20px;
+    }
+    .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+    }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 100%;
+        background-color: white;
+        padding: 20px 0;
+        gap: 20px;
+        text-align: center;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+    .nav-links a {
+        font-size: 13px;
+    }
+    .gallery-container {
+        grid-template-columns: 1fr;
+    }
+    .testimonial-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .contact-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    }
+</style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+    <div class="logo">FORMA</div>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+    <section class="hero"id="home">
+
+        <div class="hero-content">
+
+            <h1>Build Your Vision. Grow Your Business.</h1>
+
+            <p>
+                We help businesses create meaningful experiences
+                through quality services and thoughtful solutions.
+            </p>
+
+            <button onclick="location.href='#services'">Get Started</button>
+
+        </div>
+
+    </section>
+    <section class="about reveal" id="about">
+    <div class="about-content">
+        <h2>About FORMA</h2>
+        <p>
+            We help businesses grow through creative ideas,
+            professional services and meaningful solutions.
+        </p>
+    </div>
+    </section>
+    <section class="services reveal" id="services">
+        <div class="services-content">
+        <h2>Our Services</h2>
+        <p>Discover how we can help your business grow.</p>
+    </div>
+    <div class="service-container">
+
+    <div class="service-card">
+        <h3>Business Consulting</h3>
+        <p>Professional guidance to help your business grow.</p>
+    </div>
+
+    <div class="service-card">
+        <h3>Creative Solutions</h3>
+        <p>Fresh ideas designed to make your brand stand out.</p>
+    </div>
+
+    <div class="service-card">
+        <h3>Digital Services</h3>
+        <p>Modern digital solutions for your business needs.</p>
+    </div>
+
+    </div>
+    </section>
+    <section class="gallery reveal" id="gallery">
+
+    <div class="gallery-content">
+        <h2>Our Gallery</h2>
+        <p>Explore our work and discover what we can create.</p>
+    </div>
+    <div class="gallery-container">
+
+    <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2" alt="Modern Office">
+    </div>
+
+    <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72" alt="Creative Workspace">
+    </div>
+
+    <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c" alt="Business Interior">
+    </div>
+
+    </div>
+    </section>
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-prev" id="lightboxPrev">&lt;</button>
+
+        <img src="" alt="Gallery Preview" id="lightboxImage">
+
+        <button class="lightbox-next" id="lightboxNext">&gt;</button>
+    </div>
+    <section class="testimonials reveal" id="testimonials">
+
+    <div class="testimonials-content">
+        <h2>What Our Clients Say</h2>
+        <p>Real feedback from people we have worked with.</p>
+    </div>
+
+    <div class="testimonial-container">
+
+    <div class="testimonial-card">
+        <p>"Excellent service and great attention to detail."</p>
+        <h3>John Smith</h3>
+        <span>Business Owner</span>
+    </div>
+
+    <div class="testimonial-card">
+        <p>"Professional, reliable and easy to work with."</p>
+        <h3>Sarah Lee</h3>
+        <span>Marketing Manager</span>
+    </div>
+
+    <div class="testimonial-card">
+        <p>"They helped us create a better experience for our customers."</p>
+        <h3>David Tan</h3>
+        <span>Entrepreneur</span>
+    </div>
+
+    </div>
+    </section>
+    <section class="faq reveal" id="faq">
+        <div class="faq-content">
+            <h2>Frequently Asked Questions</h2>
+            <p>
+                Find answers to common questions about our services.
+            </p>
+        </div>
+        <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question">
+            <h3>What services do you provide?</h3>
+            <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p>
+                We provide professional business solutions
+                tailored to your needs.
+            </p>
+        </div>
+    </div>
+    <div class="faq-item">
+    <div class="faq-question">
+        <h3>How can I get started?</h3>
+        <span>+</span>
+    </div>
+    <div class="faq-answer">
+        <p>
+            Simply contact our team and tell us about
+            your business needs. We will guide you
+            through the next steps.
+        </p>
+    </div>
+</div>
+<div class="faq-item">
+    <div class="faq-question">
+        <h3>How long does a project take?</h3>
+        <span>+</span>
+    </div>
+    <div class="faq-answer">
+        <p>
+            Project timelines depend on the scope
+            and requirements. We will discuss the
+            estimated timeline with you before starting.
+        </p>
+    </div>
+</div>
+</div>  
+</section>
+
+    <section class="contact reveal" id="contact">
+
+    <div class="contact-content">
+        <h2>Let's Work Together</h2>
+        <p>
+            Have a project in mind?
+            Get in touch with us today.
+        </p>
+    </div>
+    <div class="contact-container">
+
+    <a href="mailto:jianshengchan2@gmail.com" class="contact-card email-card">
+        <h3>Email Us</h3>
+        <p>jianshengchan2@gmail.com</p>
+    </a>
+
+    <a href="tel:+60175462466" class="contact-card call-card">
+        <h3>Call Us</h3>
+        <p>+60 17-5462466</p>
+    </a>
+
+    <a href="https://www.google.com/maps/search/?api=1&query=Kuala+Lumpur+Malaysia" target="_blank"rel="noopener noreferrer" class="contact-card visit-card">
+        <h3>Visit Us</h3>
+        <p>Kuala Lumpur, Malaysia</p>
+    </a>
+    </div>
+     </section>
+     
+     <footer class="footer">
+    <div class="footer-content">
+        <h2>FORMA</h2>
+        <p>Building ideas. Creating possibilities.</p>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 FORMA. All Rights Reserved.</p>
+    </div>
+    </footer>
+    <button id="backToTop">↑</button>
+    <script>
+    const backToTop = document.getElementById("backToTop");
+    const navLinks = document.querySelectorAll(".nav-links a");
+    const navMenu = document.querySelector(".nav-links");
+    const sections = document.querySelectorAll("section[id]");
+    window.addEventListener("scroll", function() {
+    if (window.scrollY > 300) {
+    backToTop.style.display = "block";
+    } 
+    else {
+    backToTop.style.display = "none";
+    }
+    });
+    backToTop.addEventListener("click", function() {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+    });
+   
+window.addEventListener("scroll", function() {
+
+    sections.forEach(function(section) {
+
+        if (
+            window.scrollY >= section.offsetTop - 50 ||
+            (section.id === "contact" &&
+            window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5)
+        ) {
+
+            navLinks.forEach(function(link) {
+
+                link.classList.remove("active");
+
+                if (link.getAttribute("href") === "#" + section.id) {
+                    link.classList.add("active");
+                }
+
+            });
+
+        }
+
+    });
+
+});
+const menuToggle = document.getElementById("menuToggle");
+menuToggle.addEventListener("click", function() {
+
+    navMenu.classList.toggle("show");
+
+});
+navLinks.forEach(function(link) {
+
+    link.addEventListener("click", function() {
+
+        navMenu.classList.remove("show");
+
+    });
+
+});
+const revealElements = document.querySelectorAll(
+    ".about, .services, .gallery, .testimonials, .faq, .contact"
+);
+
+window.addEventListener("scroll", function() {
+
+    revealElements.forEach(function(element) {
+
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+
+        if (elementTop < windowHeight - 100) {
+            element.classList.add("active");
+        }
+        else {
+            element.classList.remove("active");
+        }
+
+    });
+
+});
+    window.dispatchEvent(new Event("scroll"));
+    const faqQuestions = document.querySelectorAll(".faq-question");
+
+    faqQuestions.forEach(function(question) {
+    question.addEventListener("click", function() {
+        const answer = question.nextElementSibling;
+
+        const icon = question.querySelector("span");
+
+    if (answer.style.maxHeight) {
+        answer.style.maxHeight = null;
+        icon.textContent = "+";
+    }
+    else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        icon.textContent = "−";
+    }   
+    });
+    })
+    const galleryImages = document.querySelectorAll(".gallery-item img");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    let currentImageIndex = 0;
+    const prevButton = document.getElementById("lightboxPrev");
+    const nextButton = document.getElementById("lightboxNext");
+    function updateLightboxButtons() {
+    lightboxImage.src = galleryImages[currentImageIndex].src;
+
+    prevButton.style.display = currentImageIndex === 0 ? "none" : "block";
+
+    nextButton.style.display = currentImageIndex === galleryImages.length - 1 ? "none" : "block";
+}
+
+    galleryImages.forEach(function(image) {
+    image.addEventListener("click", function() {
+        currentImageIndex = Array.from(galleryImages).indexOf(image);
+        updateLightboxButtons();
+        
+        lightbox.style.display = "flex";
+        lightboxImage.src = image.src;
+
+         requestAnimationFrame(function() {
+            lightbox.style.opacity = "1";
+        });
+    });
+});
+    nextButton.addEventListener("click", function(event) {
+    event.stopPropagation();
+
+    if (currentImageIndex < galleryImages.length - 1) {
+    currentImageIndex++;
+    updateLightboxButtons();
+}
+});
+    prevButton.addEventListener("click", function(event) {
+    event.stopPropagation();
+
+   if (currentImageIndex > 0) {
+    currentImageIndex--;
+    updateLightboxButtons();
+}
+});
+    lightbox.addEventListener("click", function(event) {
+    if (event.target === lightbox) {
+        lightbox.style.opacity = "0";
+        lightbox.style.display = "none";
+    }
+});
+    document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        lightbox.style.opacity = "0";
+        lightbox.style.display = "none";
+    }
+});
+    </script>
+</body>
+</html>
