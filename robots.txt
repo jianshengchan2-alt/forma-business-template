@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jianshengchan2-alt.github.io/forma-business-template/sitemap.xml
