@@ -564,16 +564,55 @@
         flex-direction: column;
         align-items: center;
     }
-    .lightbox-prev {
-        left: 5px;
-    }
-
-    .lightbox-next {
-        right: 5px;
+    .lightbox {
+        top: 80px;
+        height: calc(100% - 80px);
+        padding: 0;
     }
 
     .lightbox img {
-        max-width: 65%;
+        width: 100%;
+        height: 85%;
+        max-width: 100%;
+        max-height: 90%;
+        object-fit: contain;
+        border-radius: 0;
+    }
+
+    .lightbox-prev {
+        color: #f5f1e8;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        padding: 0;
+        font-size: 32px;
+        z-index: 2001;
+    }
+
+    .lightbox-next {
+        color: #f5f1e8;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        padding: 0;
+        font-size: 32px;
+        z-index: 2001;
+    }
+    .lightbox-close {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 32px;
+        color: #222;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 2002;
     }
     }
 </style>
@@ -668,6 +707,7 @@
     </div>
     </section>
     <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
         <button class="lightbox-prev" id="lightboxPrev">&lt;</button>
 
         <img src="" alt="Gallery Preview" id="lightboxImage">
@@ -957,6 +997,12 @@ window.addEventListener("scroll", function() {
         lightbox.style.opacity = "0";
         lightbox.style.display = "none";
     }
+});
+    const closeButton = document.getElementById("lightboxClose");
+
+    closeButton.addEventListener("click", function() {
+    lightbox.style.opacity = "0";
+    lightbox.style.display = "none";
 });
     </script>
 </body>
