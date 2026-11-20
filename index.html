@@ -792,6 +792,13 @@
     </footer>
     <button id="backToTop">↑</button>
     <script>
+    if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+    }
+
+    window.addEventListener("load", function() {
+    window.scrollTo(0, 0);
+});
     const backToTop = document.getElementById("backToTop");
     const navLinks = document.querySelectorAll(".nav-links a");
     const navMenu = document.querySelector(".nav-links");
